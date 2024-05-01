@@ -1,19 +1,17 @@
-package bitcamp.myapp.security;
+package bitcamp.myapp.security04;
 
 import bitcamp.myapp.service.MemberService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig {
 
   private static final Log log = LogFactory.getLog(SecurityConfig.class);
@@ -28,7 +26,6 @@ public class SecurityConfig {
 
     http
         .authorizeHttpRequests((authorize) -> authorize
-            .mvcMatchers("/member/form", "/member/add", "/", "/img/**").permitAll()
             .anyRequest().authenticated()
         )
         .httpBasic(Customizer.withDefaults())

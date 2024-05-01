@@ -8,6 +8,7 @@
   <resultMap id="MemberMap" type="Member">
     <id column="member_no" property="no"/>
     <result column="email" property="email"/>
+    <result column="password" property="password"/>
     <result column="name" property="name"/>
     <result column="photo" property="photo"/>
     <result column="created_date" property="createdDate"/>
@@ -15,7 +16,7 @@
 
   <insert id="add" parameterType="Member">
     insert into members(email,name,password,photo)
-    values(#{email},#{name},sha2(#{password},256),#{photo})
+    values(#{email},#{name},#{password},#{photo})
   </insert>
 
   <delete id="delete" parameterType="int">
@@ -55,7 +56,7 @@
       name=#{name},
       photo=#{photo}
     <if test="password != ''">
-      , password=sha2(#{password},256)
+      , password=#{password}
     </if>
     where
       member_no=#{no}
@@ -65,14 +66,29 @@
     select
       member_no,
       email,
+      password,
       name,
       created_date
     from
       members
     where
       email= #{email}
-      and password=sha2(#{password},256)
+      and password=#{password}
   </select>
+
+  <select id="findByEmail" resultMap="MemberMap">
+    select
+      member_no,
+      email,
+      password,
+      name,
+      created_date
+    from
+      members
+    where
+      email= #{email}
+  </select>
+
 
   <select id="countAll" resultType="int">
     select count(*) from members;

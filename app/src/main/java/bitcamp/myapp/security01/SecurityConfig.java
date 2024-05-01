@@ -51,7 +51,7 @@ public class SecurityConfig {
     return http.build();
   }
 
-  // 사용자 인증을 처리할 서비스 객체를 준비한다.
+  // 사용자 정보를 리턴해주는 객체
   @Bean
   public UserDetailsService userDetailsService() {
 
@@ -62,8 +62,7 @@ public class SecurityConfig {
         .roles("USER")
         .build();
 
-    // 로그인 폼에 입력도니 값을 위의 사용자 정보와 비교하여 일치할 경우
-    // 세션에 보관하는 일을 할 객체이다.
+    // 메모리에 사용자 정보(UserDerails 객체)를 보관한다.
     return new InMemoryUserDetailsManager(userDetails);
   }
 }

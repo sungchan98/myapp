@@ -1,19 +1,16 @@
-package bitcamp.myapp.security;
+package bitcamp.myapp.security03;
 
 import bitcamp.myapp.service.MemberService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig {
 
   private static final Log log = LogFactory.getLog(SecurityConfig.class);
@@ -28,7 +25,6 @@ public class SecurityConfig {
 
     http
         .authorizeHttpRequests((authorize) -> authorize
-            .mvcMatchers("/member/form", "/member/add", "/", "/img/**").permitAll()
             .anyRequest().authenticated()
         )
         .httpBasic(Customizer.withDefaults())
@@ -55,9 +51,7 @@ public class SecurityConfig {
 
   // 로그인 폼에서 입력한 암호와 DB에서 꺼낸 암호가 같은지 바교하는 객체를 준비한다
   // Spring Security는 이 객체를 사용하여 암호를 비교한다.
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new SimplePasswordEncoder();
-  }
+//  public PasswordEncoder passwordEncoder() {
+//    return new SimplePasswordEncoder();
+//  }
 }
