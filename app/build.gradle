@@ -22,13 +22,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.2'
-    compileOnly 'org.projectlombok:lombok'
+
+    // 개발 보조 라이브러리
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // Lombok 관련 라이브러리
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+    // MySQL JDBC 라이브러리
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 애노테이션으로 지정된 SpringBoot의 설정 처리를 도와주는 라이브러리
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // AWS S3 API 라이브러리
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.688'
@@ -40,7 +46,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
 
-
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 }
 
 tasks.named('bootBuildImage') {

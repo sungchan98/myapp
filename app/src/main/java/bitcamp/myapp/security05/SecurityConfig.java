@@ -1,4 +1,4 @@
-package bitcamp.myapp.security04;
+package bitcamp.myapp.security05;
 
 import bitcamp.myapp.service.MemberService;
 import org.apache.commons.logging.Log;
@@ -27,6 +27,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests((authorize) -> authorize
+            .mvcMatchers("/member/form", "/member/add", "/img/**", "/home", "/").permitAll()
             .anyRequest().authenticated()
         )
         .formLogin(formLoginConfigurer -> {

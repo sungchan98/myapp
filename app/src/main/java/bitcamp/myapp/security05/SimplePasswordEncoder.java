@@ -1,10 +1,10 @@
-package bitcamp.myapp.security;
+package bitcamp.myapp.security05;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-//사용자가 입력한 암호와 DB에 저장되 암호를 비교하는 일을 수행
+// 사용자가 입력한 암호와 DB에 저장된 암호를 비교하는 일을 수행
 public class SimplePasswordEncoder implements PasswordEncoder {
 
   @Override
@@ -14,10 +14,9 @@ public class SimplePasswordEncoder implements PasswordEncoder {
       // 사용자가 입력한 암호를 암호화시켜 리턴하는 것을 보여주기 위한 예이다.
       // Base64는 암호 알고리즘이 아니다.
       // encode() 라는 메서드의 역할을 이해하기 위함이다.
-      return Base64.getEncoder()
-          .encodeToString(rawPassword.toString().getBytes(StandardCharsets.UTF_8.name()));
+      return Base64.getEncoder().encodeToString(rawPassword.toString().getBytes(StandardCharsets.UTF_8.name()));
     } catch (Exception e) {
-      throw new RuntimeException("지원하지 않는 Charset입니다.");
+      throw new RuntimeException("지원하지 않는 Charset 입니다.");
     }
   }
 

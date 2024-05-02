@@ -110,7 +110,7 @@ public class MemberController implements InitializingBean {
     } else {
       member.setPhoto(old.getPhoto());
     }
-    
+
     member.setPassword(passwordEncoder.encode(member.getPassword()));
     memberService.update(member);
     return "redirect:list";

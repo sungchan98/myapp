@@ -1,10 +1,9 @@
-package bitcamp.myapp.security;
+package bitcamp.myapp.security08;
 
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.vo.Member;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,6 +28,13 @@ public class MyUserDetailsService implements UserDetailsService {
 
     log.debug(member);
 
-    return new MemberUserDetails(member);
+    MemberUserDetails userDetails = new MemberUserDetails();
+    userDetails.setNo(member.getNo());
+    userDetails.setName(member.getName());
+    userDetails.setEmail(member.getEmail());
+    userDetails.setPassword(member.getPassword());
+    userDetails.setPhoto(member.getPhoto());
+
+    return userDetails;
   }
 }

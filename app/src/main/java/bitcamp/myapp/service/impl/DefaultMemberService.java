@@ -43,7 +43,6 @@ public class DefaultMemberService implements MemberService {
     return memberDao.findByEmail(email);
   }
 
-
   @Override
   public int update(Member member) {
     return memberDao.update(member);
