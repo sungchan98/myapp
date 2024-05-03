@@ -5,12 +5,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -25,21 +29,24 @@ public class SecurityConfig {
   // Spring Security를 처리할 필터 체인을 준비한다.
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
     return http
         .authorizeHttpRequests(authorize -> authorize
-            .mvcMatchers("/member/form", "/member/add", "/img/**", "/home", "/").permitAll()
+            .mvcMatchers("/member/form", "/member/add", "/img/**", "/home", "/", "*/list", "*/view", "/logout").permitAll()
             .anyRequest().authenticated()
         )
         .formLogin(formLoginConfigurer ->
-            formLoginConfigurer
-                .loginPage("/auth/form") // 로그인 폼을 제공하는 URL
-                .loginProcessingUrl("/auth/login") // 클라이언트가 로그인을 하기 위해 요청하는 URL (페이지 컨트롤러와 상관없다)
-                .usernameParameter("email") // 로그인 수행할 때 사용할 사용자 아이디 또는 이메일(principal) 파라미터 명
-                .passwordParameter("password") // 로그인 수행할 때 사용할 사용자 암호(credential) 파라미터 명
-                .successForwardUrl("/auth/loginSuccess") // 로그인 성공 후 포워딩 할 URL
-                .permitAll() // 모든 권한 부여
+          formLoginConfigurer
+              .loginPage("/auth/form") // 로그인 폼을 제공하는 URL
+              .loginProcessingUrl("/auth/login") // 클라이언트가 로그인을 하기 위해 요청하는 URL (페이지 컨트롤러와 상관없다)
+              .usernameParameter("email") // 로그인 수행할 때 사용할 사용자 아이디 또는 이메일(principal) 파라미터 명
+              .passwordParameter("password") // 로그인 수행할 때 사용할 사용자 암호(credential) 파라미터 명
+              .successForwardUrl("/auth/loginSuccess") // 로그인 성공 후 포워딩 할 URL
+              .permitAll() // 모든 권한 부여
         )
-        //.logout(Customizer.withDefaults())
+        .logout(Customizer.withDefaults())
+        // 1) '/logout' URL로 POST 요청을 해야 한다.
+        // 2) 서버에서 받은 CSRF 토큰을 요청 헤더에 넣어야 한다.
         .build();
   }
 

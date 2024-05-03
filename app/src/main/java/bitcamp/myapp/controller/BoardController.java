@@ -7,6 +7,7 @@ import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +45,7 @@ public class BoardController {
   public String add(
       Board board,
       MultipartFile[] attachedFiles,
-      @LoginUser Member loginUser,
-      HttpSession session) throws Exception {
+      @LoginUser Member loginUser) throws Exception {
 
     board.setWriter(loginUser);
 

@@ -17,21 +17,9 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
   private static final Log log = LogFactory.getLog(LoginUserArgumentResolver.class);
 
-  public static void main(String[] args) {
-    class Car {
-
-    }
-    class Truck extends Car {
-
-    }
-
-    System.out.println(Truck.class.isAssignableFrom(Car.class));
-    System.out.println(Car.class.isAssignableFrom(Truck.class));
-
-  }
-
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
+
     return parameter.hasParameterAnnotation(LoginUser.class) &&
         parameter.getParameterType().isAssignableFrom(Member.class);
   }
@@ -43,4 +31,5 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     log.debug(parameter.getParameterName());
     return session.getAttribute(parameter.getParameterName());
   }
+
 }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,8 +50,7 @@ public class Board2Controller {
       HttpSession session,
       SessionStatus sessionStatus) throws Exception {
 
-    log.debug(loginUser + "@@@@@@@@@@@@@@@@@@@@@@");
-
+    log.debug(loginUser);
     board.setWriter(loginUser);
 
     // 게시글 등록할 때 삽입한 이미지 목록을 세션에서 가져온다.
@@ -58,6 +58,7 @@ public class Board2Controller {
     if (attachedFiles == null) {
       attachedFiles = new ArrayList<>();
     }
+
     for (int i = attachedFiles.size() - 1; i >= 0; i--) {
       AttachedFile attachedFile = attachedFiles.get(i);
       if (board.getContent().indexOf(attachedFile.getFilePath()) == -1) {
@@ -119,8 +120,8 @@ public class Board2Controller {
   @PostMapping("update")
   public String update(
       Board board,
-      HttpSession session,
       @LoginUser Member loginUser,
+      HttpSession session,
       SessionStatus sessionStatus) throws Exception {
 
     Board old = boardService.get(board.getNo());
@@ -133,7 +134,6 @@ public class Board2Controller {
 
     // 게시글 변경할 때 삽입한 이미지 목록을 세션에서 가져온다.
     List<AttachedFile> attachedFiles = (List<AttachedFile>) session.getAttribute("attachedFiles");
-
     if (attachedFiles == null) {
       attachedFiles = new ArrayList<>();
     }
@@ -239,8 +239,7 @@ public class Board2Controller {
     }
 
     // 업로드한 파일 목록을 세션에 보관한다.
-    ArrayList<AttachedFile> oldAttachedFiles = (ArrayList<AttachedFile>) session.getAttribute(
-        "attachedFiles");
+    ArrayList<AttachedFile> oldAttachedFiles = (ArrayList<AttachedFile>) session.getAttribute("attachedFiles");
     if (oldAttachedFiles != null) {
       oldAttachedFiles.addAll(attachedFiles);
       model.addAttribute("attachedFiles", oldAttachedFiles);
